@@ -1,0 +1,53 @@
+%D Master
+%U -
+%V git
+
+Proprietary architectural and civil engineering CAD program
+
+Floppy disk snapshots cover the period 1990-04 to 1992-07
+Obtain snapshots from backup floppies
+Remove snapshots that had sector errors
+Extract zip files where needed
+Convert file names to lowercase
+Remove \r
+Remove automatically generated files
+grep -l 'Automatically generated file' */* |
+fgrep -v .bat |
+fgrep -v mc.a |
+fgrep -v pos.c |
+xargs rm
+Remove non-source files:
+rm -f */*.exe */*.icn */*.tek */out
+Fix 2024 dates:
+[tekton-1992-03-01]$ touch -t 199203010000 lock.c acd.rtl acr.rtl makefile pos.c
+Remove foreign file
+[tekton-1992-03-01]$ rm 3dv.c
+Remove auto-generated file
+tekton-1992-03-01/linerec.c
+Homogenize directory names
+Measure using:
+for i in tekton-199*; do echo -n $i,;cat $i/* | wc -l; done
+
+In the tek directory
+The RCS repo covers the period 1993-01 to 1994-09
+Measure using
+/cygdrive/c/dds/pubs/Current/cagr/tools/measure rcs 19930106 12 c,h,p,/renmenu,/tekmenu
+Copy until 1994-09-06
+
+In the tw-32-rcs directory.
+The RCS repo covers the period 1995-12 1996-12
+Measure using
+/cygdrive/c/dds/pubs/Current/cagr/tools/measure rcs 19951206 12 C,CPP,DEF,H,/HORMENU,L,/MAKEFILE,PL,RC,RC2,/STRINGS,/TOOLBARS,/TOOLBR16,/VMENU,Y,c,cpp,h,mak,/msg,pl,/prmenu,rc
+
+
+Establish start date for CVS
+cvs log -SN |
+sed -n 's/^date: \(..........\).*/\1/p' | sort -u | head -1
+19960620
+No source was available at that time.
+
+Go manually through the log and establish 19970116
+
+In the program's source directory run:
+
+../cagr/tools/measure cvs 19970116 12 h,c,cpp,pl,H,C,dsl,RC,bas,rc,y,l >../cagr/data/master.csv

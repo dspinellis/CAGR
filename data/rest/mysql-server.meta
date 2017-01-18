@@ -1,0 +1,17 @@
+%D MySQL
+%U lp:mysql-server
+%V bzr
+
+Obtain repo using
+bzr branch lp:mysql-server
+
+Establish first date through
+bzr log | grep timestamp: | tail
+
+Measure by running
+~/src/cagr/tools/measure bzr 20000731 12 >~/src/cagr/data/mysql-server.csv
+
+Delete last two entries, because the corresponding code is missing
+2013-03-01,0
+2013-03-31,0
+

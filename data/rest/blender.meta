@@ -1,0 +1,12 @@
+%D Blender
+%U lp:blender
+%V bzr
+
+Obtain repo using
+bzr branch lp:blender
+
+Establish first date through
+bzr log | grep timestamp: | tail
+
+Measure by running
+~/src/cagr/tools/measure bzr 20021012 12 >~/src/cagr/data/blender.csv

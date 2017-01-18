@@ -1,0 +1,9 @@
+%D GCC
+%U https://github.com/mirrors/gcc.git
+%V git
+
+Clone using:
+git clone https://github.com/mirrors/gcc.git
+
+Measure using:
+gitcol-measure

@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# List the extensions used, ordered by the corresponding number of files
+#
+
+find . -type f |
+sed -n 's/^.*\.\([^/]*\)$/\1/p' |
+sort |
+uniq -c |
+sort -rn

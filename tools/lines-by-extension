@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# Measure the number of lines by extension for each project
+#
+
+SRCDIR=/$HOME/data
+DATADIR=$HOME/src/cagr/filetypes
+EXCLUDE=.git
+
+rm -rf $DATADIR
+
+# For each project
+find $SRCDIR -name .git -type d |
+sed 's/\/\.git$//' |
+while read repo ; do
+  cd $repo
+  name=$(expr match "$repo" "$SRCDIR/\(.*\)")
+  echo "Measuring $name"
+  mkdir -p "$DATADIR/$name"
+
+  BRANCH=`git config --get-regexp branch.*remote | sed -n 's/^branch.//;s/\.remote origin//p'`
+  if [ "$BRANCH" = '' ]
+  then
+	  BRANCH=master
+  fi
+  git reset --hard origin/$BRANCH --
+  git checkout $BRANCH
+  git checkout -- .
+
+  # Count lines
+  find . -type f |
+  fgrep -v "$EXCLUDE" |
+  file -f - |
+  sed -n 's/:  .*text.*//p' |
+  tr \\n \\0 |
+  wc -l --files0-from=- |
+  sed \$d >"$DATADIR/$name/files.wc"
+
+  # Remove all checked out files
+  rm -rf *
+done
+
+# Summarize the results
+
+find $DATADIR -name \*.wc |
+# Keep only genuine extensions
+xargs sed -n 's| .*/| |;s/ .*\./ /p' |
+# Sum by extension
+awk '{s[$2] += $1; s["total"] += $1} END {for (i in s) print i, s[i]}' |
+sort -k2nr

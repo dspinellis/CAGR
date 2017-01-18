@@ -1,0 +1,17 @@
+%D Open Office
+%U https://bitbucket.org/mst/ooo340
+%V hg
+
+Open Office old history
+
+Downloading the repository from Bitbucket failed due to Hg problems
+with the HTTP protocol.
+Therefore, fork https://bitbucket.org/mst/ooo340 into
+https://bitbucket.org/dspinellis/ooo340 and clone running
+hg clone ssh://hg@bitbucket.org/dspinellis/ooo340
+
+Establish first date through
+hg log | grep date: | tail
+
+Measure by running
+~/src/cagr/tools/measure hg 2000-09-18 12 >~/src/cagr/data/oo.csv &

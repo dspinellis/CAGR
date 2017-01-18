@@ -1,0 +1,6 @@
+%D GNU
+%U rsync://svn.savannah.gnu.org/
+%V svn
+
+Mirror all GNU svn projects using the following hack
+rsync -avHS rsync://svn.savannah.gnu.org/svn/ddd/.. /home/dds/data/gnu-svn >~/rsync.out &

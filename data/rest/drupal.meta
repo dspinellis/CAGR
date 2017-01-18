@@ -1,0 +1,9 @@
+%D Drupal
+%U http://git.drupal.org/project/drupal.git
+%V git
+
+Clone using:
+git clone --branch 8.x http://git.drupal.org/project/drupal.git
+
+Measure using:
+gitcol-measure

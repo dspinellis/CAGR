@@ -1,0 +1,51 @@
+%D Django
+%U https://github.com/django/django
+%V git
+%F rest/django.csv
+
+%D Git
+%U https://github.com/git/git
+%V git
+%F rest/git.csv
+
+%D MongoDB
+%U https://github.com/mongodb/mongo
+%V git
+%F rest/mongo.csv
+
+%D NodeJS
+%U https://github.com/joyent/node
+%V git
+%F rest/node.csv
+
+%D Ruby on Rails
+%U https://github.com/rails/rails
+%V git
+%F rest/rails.csv
+
+%D Spring
+%U https://github.com/SpringSource/spring-framework
+%V git
+%F rest/spring-framework.csv
+
+%D Symfony
+%U https://github.com/symfony/symfony
+%V git
+%F rest/symfony.csv
+
+These are repositories used in the post titled "Mining Git repositories
+and understanding Code Churn"
+http://kaidence.org/posts/mining-git-repositories-and-understanding-code-churn.html
+that have not been processed as part of other collections.
+(This is archived at http://www.webcitation.org/6ITQFgcbD)
+
+- Django (Python)
+- Git (C)
+- MongoDB (C++)
+- NodeJS (JavaScript)
+- Ruby on Rails (Ruby)
+- Spring Framework (Java)
+- Symfony (PHP)
+
+The were copied by running by hand git clone on each URL
+and the running gitcol-measure on the corresponding directory.

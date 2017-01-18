@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Clone all sourceware.org git repositories
+#
+
+curl http://sourceware.org/git/ |
+sed -n 's|.*summary">\([^<]*\.git\)<.*|git://sourceware.org/git/\1|p' |
+xargs -n 1 git clone

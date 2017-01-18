@@ -1,0 +1,15 @@
+%D Asterisk
+%U lp:asterisk
+%V bzr
+
+Obtain repo using
+bzr branch lp:asterisk
+
+Establish first date through
+bzr log | grep timestamp: | tail
+
+Measure by running
+~/src/cagr/tools/measure bzr 19991008 12 >~/src/cagr/data/asterisk.csv
+
+XXX Note that Asterisk appears to have gained and then lost 1 MLOC
+between 2012-07-07 and 2013-04-07

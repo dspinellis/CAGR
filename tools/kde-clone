@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Clone all KDE repositories
+#
+
+curl -s 'http://quickgit.kde.org/' |
+sed -n '/=clones/n;/=websites/n;/=scratch/n;s|^.*http://quickgit.kde.org/?p=\([^"&]*\)".*|http://anongit.kde.org/\1|p' |
+sort -u |
+xargs -n 1 git clone

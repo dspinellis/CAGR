@@ -1,0 +1,63 @@
+%D GIMP
+%U *
+%V *
+
+Introduction
+============
+The GIMP image manipulation package.  Various versions from 1998-2011 accumulated
+and analysed.
+
+This growth is relatively continuous with an early blip due to code refactoring by the
+looks of it.  Thirteen versions were extracted from 1.0.0 to 2.7.0.  All use the
+same method of source distribution with a README file.
+
+Means of production
+===================
+The data is mined from the source .bz2 files using:-
+
+% make_gimp_csv.sh
+
+The files are shown below.
+
+make_gimp_csv.sh
+++++++++++++++++
+#!/bin/sh
+#    Fiendish script to unravel a GIMP bz2 archive, count the lines in it
+#    and then use stat to read the date from the README file.
+#
+out=gimp_c.csv
+
+versions=`ls *.bz2`
+for version in $versions
+do
+     echo "Handling $version"
+
+     echo "... unzipping $version"
+     bunzip2   $version
+
+     tarname=`basename $version .bz2`
+     echo "... untarring $tarname"
+     tar xf - <     $tarname
+
+     dirname=`basename $tarname .tar`
+     echo "... counting lines for $dirname"
+     totcount=0
+     for file in `find "$dirname" -name '*.[cChH]' -print`
+     do
+          count=`wc -l < "$file"`
+          totcount=`expr $totcount + $count`
+     done
+#
+#    Output information grabbing a date
+#
+     MODDATE=$(stat -c %y $dirname/README)
+     MODDATE=${MODDATE%% *}
+     echo "$MODDATE,$totcount"          >> $out
+#
+#    Return to original condition.
+#
+     echo "... removing $dirname"
+     rm -rf    $dirname
+     echo "... zipping $tarname"
+     bzip2     $tarname
+done

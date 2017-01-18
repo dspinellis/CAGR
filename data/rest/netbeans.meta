@@ -1,0 +1,13 @@
+%D NetBeans
+%U http://hg.netbeans.org/main
+%V hg
+
+hg clone http://hg.netbeans.org/main
+
+mv main netbeans
+
+Establish first date through
+hg log | grep date: | tail
+
+Measure by running
+~/src/cagr/tools/measure hg 19990105 12 >~/src/cagr/data/netbeans.csv &

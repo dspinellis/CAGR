@@ -1,0 +1,137 @@
+#!/bin/sh
+#
+# Measure LOC over a time period for a repo
+#
+
+if [ "$3" = "" ]
+then
+	echo "Usage $0: repo-type start-date year-divisor" 1>&2
+	echo "Example $0 svn 20000301 4" 1>&2
+	echo "For Git repos the BRANCH environment variable must be set" 1>&2
+	exit 1
+fi
+
+REPO="$1"
+shift
+
+START="$1"
+shift
+
+# Start date in seconds
+case `uname` in
+FreeBSD)
+	START=`date -j "$START"0000.00 '+%s'`
+	;;
+Darwin)
+	# Convert date to mmddHHMMccyy.ss
+	MDHMY=`echo $START | sed 's/\(....\)\(..\)\(..\)/\2\30000\1.00/'`
+	START=`date -j "$MDHMY" '+%s'`
+	;;
+CYGWIN*)
+	START=`date -d "$START" '+%s'`
+	;;
+Linux)
+	START=`date -d "$START" '+%s'`
+	;;
+*)
+	echo "Unknown operating system type" 1>&2
+	exit 1
+esac
+
+# Periods per year
+YEARDIV="$1"
+shift
+
+# End date in seconds
+END=`date '+%s'`
+
+# Time increment in seconds
+INCR=`expr 31557600 / $YEARDIV`
+
+echo "Measuring $(pwd)" >&2
+
+DATE=$START
+while [ $DATE -lt $END ]
+do
+	case `uname` in
+	Darwin)
+		YMD=`date -r $DATE '+%Y-%m-%d'`
+		;;
+	FreeBSD)
+		YMD=`date -r $DATE '+%Y-%m-%d'`
+		;;
+	CYGWIN*)
+		YMD=`date -d @$DATE '+%Y-%m-%d'`
+		;;
+	Linux)
+		YMD=`date -d @$DATE '+%Y-%m-%d'`
+		;;
+	esac
+	DATE=`expr $DATE + $INCR`
+
+	case "$REPO" in
+	bzr)
+		DIR=/tmp/bzr-export-$$
+		# Nothing to exclude
+		EXCLUDE=///
+		rm -rf $DIR
+		bzr export -r date:"$YMD" $DIR
+		;;
+	hg)
+		hg update --clean --rev "date('< $YMD')" >>/tmp/hg.$$.out 2>&1
+		EXCLUDE='/.hg/'
+		DIR=.
+		;;
+	svn)
+		svn update -r "{$YMD}" >>/tmp/svn.$$.out 2>&1
+		EXCLUDE='/.svn/'
+		if [ -d trunk ]
+		then
+			DIR=trunk
+		else
+			DIR=.
+		fi
+		;;
+	cvs)
+		cvs update -D "$YMD" >>/tmp/cvs.$$.out 2>&1
+		EXCLUDE='/CVS/'
+		DIR=.
+		;;
+	rcs)
+		# Remove files under version control
+		ls RCS | sed 's/,v$//' | xargs rm -f
+		# Checkout files at specified date
+		co -f -d"$YMD" RCS/* >>/tmp/rcs.$$.out 2>&1
+		EXCLUDE='/RCS/'
+		DIR=.
+		;;
+	git)
+		HASH=`git rev-list -n 1 --before="$YMD" $BRANCH`
+		if [ "$HASH" = '' ]
+		then
+			echo "$YMD,0"
+			continue
+		fi
+		git checkout -f $HASH >>/tmp/git.$$.out 2>&1
+		EXCLUDE=.git
+		DIR=.
+		;;
+	*)
+		echo "Unknown repository type: $REPO" 1>&2
+		exit 1
+		;;
+	esac
+
+	/bin/echo -n "$YMD,"
+	find $DIR -type f |
+	fgrep -v "$EXCLUDE" |
+	egrep '\.(ada|as|asm|c|C|cc|cpp|cs|cxx|e|el|F|F90|g|go|groovy|h|hh|hpp|hxx|i|idl|java|js|lsp|lua|m|m4|php|phpt|pl|pm|py|q|rb|s|S|scala|sh|sql|vala|y)$' |
+	tr \\n \\0 |
+	xargs -0 cat |
+	wc -l
+	# Remove checkout out files to save space
+	rm -rf $DIR/*
+done |
+sed 's/  *//'
+
+rm -rf /tmp/bzr-export-$$

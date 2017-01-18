@@ -1,0 +1,14 @@
+%D GNOME
+%U https://git.gnome.org/browse/
+%V git
+
+GNOME desktop environment and GUI
+
+Download all GNOME projects using tools/gnome-clone
+
+Measure them using tools/gitcol-measure
+
+Sum results across all repos with:
+sed -n -r 's/-(06|12)-..,/-\1,/p' gnome/* |
+awk -F, '{sum[$1] += $2} END { for (i in sum) print i, sum[i]}'  |
+sort | sed 's/ /-01,/g' >gnome.csv

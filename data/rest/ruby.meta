@@ -1,0 +1,16 @@
+%D Ruby
+%U lp:ruby
+%V bzr
+
+Obtain repo using
+bzr branch lp:ruby
+
+Establish first date through
+bzr log | grep timestamp: | tail
+
+Measure by running
+~/src/cagr/tools/measure bzr 19980116 12 >~/src/cagr/data/ruby.csv
+
+Remove last line for which no data existed
+2013-04-17,0
+

@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Clone all Eclipse git repositories
+#
+
+perl -e 'for ($i = 0; $i < 1000; $i += 50) { print "http://git.eclipse.org/c/?ofs=$i\n"}' |
+while read url
+do
+	curl -s "$url" |
+	sed -n '/sublevel-repo/s|.*href='\''/c/\([^?][^'\'']*\)'\''.*|git://git.eclipse.org/gitroot/\1|p' |
+	xargs -n 1 git clone
+done

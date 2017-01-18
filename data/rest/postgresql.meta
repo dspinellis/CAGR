@@ -1,0 +1,10 @@
+%D PostgreSQL
+%U git://git.postgresql.org/git/postgresql.git
+%V git
+
+Clone using:
+git clone git://git.postgresql.org/git/postgresql.git
+
+
+Measure using:
+gitcol-measure

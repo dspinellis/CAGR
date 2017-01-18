@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Create a repository with the old and current Linux kernel source
+#
+
+curl -Ls https://archive.org/download/git-history-of-linux/full-history-linux.git.tar |
+tar xvf -
+
+cd history-torvalds
+git pull
+cd ..
+mkdir -p rest
+mv history-torvals rest/linux

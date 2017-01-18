@@ -1,0 +1,73 @@
+%D Gundalf
+%U -
+%V RCS
+
+Introduction
+============
+A small commercial system written in TclTk for the Oil industry 2002-2012.
+
+The growth is punctuated with only a small amount of activity in the last few years
+compared with the early part.  This should give an idea of a punctuated growth taken
+from a total of 645 updates over 10 years.
+
+Means of production
+===================
+The data is mined from the RCS version of the source code using:-
+
+% make_gundalf_gui_csv.sh | uniqueify.pl
+
+The files are shown below.
+
+make_gundalf_gui_csv.sh
++++++++++++++++++++++++
+#!/bin/sh
+#    Run Generic tokeniser on Tcl persistence data.
+#
+#    Revision: $Revision$
+#    Date:     $Date$
+#-------------------------------------------------
+if test $# -ne 0
+then
+     echo "Usage: $0"
+     exit
+fi
+
+pdir=$AIRGUN
+#
+#    Calculate the line distributions for the incremental additions.
+#
+rm -f temp$$
+for ver in {1..645}
+do
+     rlog -r1.$ver $pdir/air.wsh             > temp$$
+     yyyymmdd=`cat temp$$ | grep "^date:" | awk '{print $2;}' | sed 's/\//\-/g'`
+     co -p -r1.$ver $pdir/air.wsh            > temp$$ 2> /dev/null
+     lines=`cat temp$$ | wc -l`
+     echo "$yyyymmdd,$lines"
+done
+rm -f temp$$
+#-------------------------------------------------
+
+uniqueify.pl
+++++++++++++
+#!/usr/bin/perl
+#
+#	Remove duplicate entries for the same day retaining only the
+#	latest value for each day.
+#
+use  strict;
+my   %fields;
+
+while(my  $line = <STDIN>)
+{
+     chomp($line);
+     my   @parts    = split( /,/, $line );
+     $fields{$parts[0]}  = $parts[1];
+}
+
+foreach   my   $key ( sort keys(%fields) )
+{
+     print "$key,$fields{$key}\n";
+}
+
+exit(0);

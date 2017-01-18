@@ -1,0 +1,19 @@
+%D GitHub
+%U https://github.com/search?o=desc&p=1&q=stars%3A%3E1&s=stars&type=Repositories
+%V *
+
+Popular GitHub repos
+
+Add repos appearing in the first five pages of GitHub repositories
+ordered by number of stars (query "stars:>1").
+
+https://github.com/search?o=desc&p=1&q=stars%3A%3E1&s=stars&type=Repositories
+
+Repos collected by running tools/all-clone on June 17 2015.
+
+Repos refreshed by running on 2016-02-03
+	tools/git-pull
+	bzr pull
+	hg pull
+	rsync -avHS rsync://svn.savannah.gnu.org/svn/ddd/.. .
+Measurements made by running toos/all-measure

@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# Clone stand-alone repositories
+#
+
+mkdir -p $DATADIR/rest
+cd $DATADIR/rest
+
+bzr branch lp:inkscape
+bzr branch lp:r-project
+bzr branch lp:ruby
+
+git clone http://git.drupal.org/project/drupal.git
+git clone git://git.blender.org/blender.git
+git clone git://github.com/php/php-src.git
+git clone git://git.postgresql.org/git/postgresql.git
+git clone http://gerrit.asterisk.org/asterisk asterisk
+git clone http://git.drupal.org/project/drupal.git
+git clone https://github.com/AFNetworking/AFNetworking.git
+git clone https://github.com/apple/swift.git
+git clone https://github.com/atom/electron.git
+git clone https://github.com/blueimp/jQuery-File-Upload.git
+git clone https://github.com/django/django
+git clone https://github.com/docker/docker.git
+git clone https://github.com/driftyco/ionic.git
+git clone https://github.com/dspinellis/unix-history-repo.git
+git clone https://github.com/facebook/react.git
+git clone https://github.com/facebook/react-native.git
+git clone https://github.com/git/git
+git clone https://github.com/gulpjs/gulp.git
+git clone https://github.com/Homebrew/homebrew.git
+git clone https://github.com/jashkenas/backbone.git
+git clone https://github.com/jekyll/jekyll.git
+git clone https://github.com/jkbrzt/httpie.git
+git clone https://github.com/jquery/jquery.git
+git clone https://github.com/laravel/laravel.git
+git clone https://github.com/mbostock/d3.git
+git clone https://github.com/meteor/meteor.git
+git clone https://github.com/mirrors/gcc.git
+git clone https://github.com/mirrors/wine.git
+git clone https://github.com/mongodb/mongo
+git clone https://github.com/mozilla/gecko-dev.git
+git clone https://github.com/mrdoob/three.js.git
+git clone https://github.com/mysql/mysql-server.git
+git clone https://github.com/nodejs/node
+git clone https://github.com/nwjs/nw.js
+git clone https://github.com/Perl/perl5
+git clone https://github.com/rails/rails.git
+git clone https://github.com/Semantic-Org/Semantic-UI.git
+git clone https://github.com/socketio/socket.io.git
+git clone https://github.com/SpringSource/spring-framework
+git clone https://github.com/strongloop/express.git
+git clone https://github.com/symfony/symfony
+git clone https://github.com/wildfly/wildfly
+git clone https://github.com/zurb/foundation-sites.git
+
+hg clone http://hg.netbeans.org/main && mv main netbeans
+hg clone --insecure http://hg.python.org/cpython
+hg clone https://bitbucket.org/mst/ooo340 ||
+  hg clone ssh://hg@bitbucket.org/dspinellis/ooo340

@@ -1,0 +1,13 @@
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+cagr.pdf
+cagr.ps
+cite.rtf
+methods.pdf
+methods.ps
+office
+tags
+cover

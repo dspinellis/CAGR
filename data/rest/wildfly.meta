@@ -1,0 +1,9 @@
+%D WildFly
+%U https://github.com/wildfly/wildfly
+%V git
+
+According to Dimitris Andreadis personal email of 2013-05-08:
+
+Yeap, for AS version 7, another major refactoring, we started essentially from scratch and rebuilt the server, because there was no other way to get rid of all the garbage we accumulated the previous 8 years or so, adding back only the absolutely necessary bits. With this, and other tricks, we brought memory footprint down about x10 and reduced boot time from ~20secs to ~2.
+
+http://www.slideshare.net/dandreadis/jboss-as7-reloaded 

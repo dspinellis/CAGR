@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Clone the GNU Savannah Subversion repositories
+#
+
+rsync -avHS rsync://svn.savannah.gnu.org/svn/ddd/.. .

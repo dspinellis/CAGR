@@ -1,0 +1,1 @@
+\.(java|c|cpp|h|js|cc|php|as|cxx|py|cs|m4|sh|el|S|pm|hpp|hxx|s|pl|asm|phpt|sql)$

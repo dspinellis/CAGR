@@ -1,0 +1,9 @@
+%D Perl
+%U https://github.com/mirrors/perl.git
+%V git
+
+Clone using:
+git clone https://github.com/mirrors/perl.git
+
+Measure using:
+gitcol-measure

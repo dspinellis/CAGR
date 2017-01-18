@@ -1,0 +1,12 @@
+%D R Project
+%U lp:r-project
+%V bzr
+
+Obtain repo using
+bzr branch lp:r-project
+
+Establish first date through
+bzr log | grep timestamp: | tail
+
+Measure by running
+~/src/cagr/tools/measure bzr 19990918 12 >~/src/cagr/data/r-project.csv

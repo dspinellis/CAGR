@@ -1,0 +1,9 @@
+%D Mozilla
+%U https://github.com/mozilla/gecko-dev.git
+%V git
+
+Clone using:
+git clone https://github.com/mozilla/gecko-dev.git
+
+Measure using:
+gitcol-measure

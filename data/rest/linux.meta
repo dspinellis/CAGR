@@ -1,0 +1,8 @@
+%D Linux
+%U https://archive.org/details/git-history-of-linux
+%V git
+
+Get old version from http://archive.org/details/git-history-of-linux
+untar
+cd history-torvalds
+git pull

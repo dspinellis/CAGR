@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Clone all Gnome git repositories
+#
+
+perl -e 'for ($i = 0; $i < 1500; $i += 650) { print "https://git.gnome.org/browse/?ofs=$i\n"}' |
+while read url
+do
+	curl -s "$url" |
+	sed -n '/sublevel-repo/s|.*href='\''/browse/\([^?][^'\'']*\)'\''.*|git://git.gnome.org/\1|p' |
+	xargs -n 1 git clone
+done

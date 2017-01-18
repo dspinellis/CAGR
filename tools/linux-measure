@@ -1,0 +1,86 @@
+#!/bin/bash
+#
+# Measure LOC over a time period for Linux
+# This requires special treatment, because git rev-parses --before uses commit
+# date (with floows to 2002) rather than author date.
+#
+
+if [ "$1" = "" ]
+then
+	echo "Usage $0: year-divisor" 1>&2
+	echo "Example $0 12" 1>&2
+	exit 1
+fi
+
+START=1991-09-17
+
+# Start date in seconds
+case `uname` in
+FreeBSD)
+	START=`date -j "$START"0000.00 '+%s'`
+	;;
+Darwin)
+	# Convert date to mmddHHMMccyy.ss
+	MDHMY=`echo $START | sed 's/\(....\)\(..\)\(..\)/\2\30000\1.00/'`
+	START=`date -j "$MDHMY" '+%s'`
+	;;
+CYGWIN*)
+	START=`date -d "$START" '+%s'`
+	;;
+Linux)
+	START=`date -d "$START" '+%s'`
+	;;
+*)
+	echo "Unknown operating system type" 1>&2
+	exit 1
+esac
+
+# Periods per year
+YEARDIV="$1"
+shift
+
+# End date in seconds
+END=`date '+%s'`
+
+# Time increment in seconds
+INCR=`expr 31557600 / $YEARDIV`
+
+echo "Measuring $(pwd)" >&2
+
+DATE=$START
+while [ $DATE -lt $END ]
+do
+	case `uname` in
+	Darwin)
+		YMD=`date -r $DATE '+%Y-%m-%d'`
+		;;
+	FreeBSD)
+		YMD=`date -r $DATE '+%Y-%m-%d'`
+		;;
+	CYGWIN*)
+		YMD=`date -d @$DATE '+%Y-%m-%d'`
+		;;
+	Linux)
+		YMD=`date -d @$DATE '+%Y-%m-%d'`
+		;;
+	esac
+	DATE=`expr $DATE + $INCR`
+	echo $YMD
+done |
+sort -m - <(git log --reverse --author-date-order --pretty=format:'%ai %H' master) |
+awk 'NF == 4 { hash = $4 }
+NF == 1 && hash { print $1, hash }
+' |
+while read YMD HASH ; do
+	git checkout -f $HASH >>/tmp/git.$$.out 2>&1
+
+	/bin/echo -n "$YMD,"
+	find . -type f |
+	fgrep -v .git |
+	egrep '\.(ada|as|asm|c|C|cc|cpp|cs|cxx|e|el|F|F90|g|go|groovy|h|hh|hpp|hxx|i|idl|java|js|lsp|lua|m|m4|php|phpt|pl|pm|py|q|rb|s|S|scala|sh|sql|vala|y)$' |
+	tr \\n \\0 |
+	xargs -0 cat |
+	wc -l
+done |
+sed 's/  *//'
+rm -rf *

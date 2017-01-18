@@ -1,0 +1,12 @@
+%D KDE
+%U http://code.ohloh.net/file
+%V git
+
+Mirror repositories using tools/kde-clone
+
+Measure lines for each repo using tools/kde-measure
+
+Sum results across all repos with:
+sed -n -r 's/-(06|12)-..,/-\1,/p' kde/* |
+awk -F, '{sum[$1] += $2} END { for (i in sum) print i, sum[i]}'  |
+sort | sed 's/ /-01,/g' >kde.csv

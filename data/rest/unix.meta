@@ -1,0 +1,23 @@
+%D Unix kernel
+%U https://github.com/dspinellis/unix-history-repo.git
+%V *
+
+Clone using
+git clone https://github.com/dspinellis/unix-history-repo.git
+
+Unix kernel lines of code in .c and .h files
+
+1974-06-01	Research Unix v5
+1975-05-01	Research Unix v6
+1979-01-01	Research Unix v7
+1980-03-01	3BSD
+1983-08-01	4.2BSD
+1986-06-01	4.3BSD
+1988-06-01	4.3BSD-Tahoe
+1990-07-01	4.3BSD-Reno
+1991-06-01	Net2
+1992-08-01	4.4BSD-Alpha
+1993-11-01	FreeBSD-1.0
+1995-06-05-...	FreeBSD from the FreeBSD repo
+
+

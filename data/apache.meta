@@ -1,0 +1,6 @@
+%D Apache
+%U http://git.apache.org/
+%V git
+Apache foundation projects using git
+Downloaded using tools/apache-clone
+Measured using gitcol-measure

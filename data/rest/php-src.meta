@@ -1,0 +1,9 @@
+%D PHP
+%U https://github.com/php/php-src.git
+%V git
+
+Clone using:
+git clone git://github.com/php/php-src.git
+
+Measure using:
+gitcol-measure

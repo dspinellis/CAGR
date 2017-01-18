@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Measure all collections
+#
+
+# Ensure the current directory is in the path
+PATH="$PATH:."
+
+# All Git projects
+for i in apache eclipse gnome gnu-git kde rest sourceware ; do
+  gitcol-measure $i &
+done
+
+wait
+
+# Measure Linux again, because the normal way doesn't work
+(
+  cd $HOME/data/rest/linux
+  $HOME/src/cagr/tools/linux-measure 12 >$HOME/src/cagr/data/rest/linux.csv
+)
+
+
+# GNU Subversion repos
+svncol-measure gnu-svn &
+
+# Measure a non-Git project in the "rest" collection
+rest_measure()
+{
+  (
+    cd $HOME/data/rest/$1
+    $HOME/src/cagr/tools/measure $2 $3 12 >$HOME/src/cagr/data/rest/$1.csv &
+  )
+}
+
+mkdir -p $HOME/src/cagr/data/rest
+
+rest_measure netbeans hg 19990105
+rest_measure cpython hg 19900809
+rest_measure ooo340 hg 20000918
+
+rest_measure inkscape bzr 20060116
+rest_measure r-project bzr 19970918
+rest_measure ruby bzr 19980116

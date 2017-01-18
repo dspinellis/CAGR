@@ -1,0 +1,7 @@
+%D Sourceware
+%U http://sourceware.org/git/
+%V git
+
+Several tools maintained at http://www.sourceware.org
+Clone using nice ~/src/cagr/tools/sourceware-clone >&sourceware.out &
+Measure using gitcol-measure

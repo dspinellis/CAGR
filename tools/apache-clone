@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Clone all Apache repositories
+#
+
+curl -s 'http://git.apache.org/' |
+sed -n 's|.*\(https://github.com/apache/[^"]*\)".*|\1|p' |
+xargs -n 1 git clone

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+export DATADIR=$HOME/data
+
+if expr match $0 / >/dev/null ; then
+  SCRIPTDIR=$(dirname $0)
+else
+  SCRIPTDIR=$(pwd)/$(dirname $0)
+fi
+
+mkdir -p $DATADIR
+cd $DATADIR
+
+# Fetch from repos in parallel
+for i in apache eclipse gnome gnu-git kde sourceware gnu-svn rest ; do
+  mkdir -p $i
+  cd $i
+  nohup $SCRIPTDIR/$i-clone >../$i.out 2>../$i.err &
+  cd ..
+done
+
+# Wait for fetching to finish
+wait
+
+# Remove checked-out versions to save about 74GB of space
+pushd
+cd $DATADIR
+find  . -type d -name .git |
+while read d ; do
+  pushd $d
+  rm -rf ../*
+  popd
+done
+popd

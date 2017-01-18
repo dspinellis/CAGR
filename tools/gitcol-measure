@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# Measure all git repositories in the specified collection
+#
+
+COLLECTION="$1"
+
+if [ "$COLLECTION" = '' ]
+then
+	echo "Usage: $0 collection-name" 1>&2
+	exit 1
+fi
+
+rm -rf $HOME/src/cagr/data/$COLLECTION
+mkdir $HOME/src/cagr/data/$COLLECTION
+
+find $HOME/data/$COLLECTION -maxdepth 1 -type d |
+while read repo
+do
+	test -d $repo/.git || continue
+	cd $repo
+	if ! git rev-list -n 1 --all >/dev/null 2>/dev/null ; then
+	  echo "Skipping empty repository $(pwd)" >&2
+	  continue
+	fi
+	echo "Obtaining start for $(pwd)" >&2
+	name=`basename $repo`
+	export BRANCH=`git config --get-regexp branch.*remote | sed -n 's/^branch.//;s/\.remote origin//p'`
+	if [ "$BRANCH" = '' -o name = unix ]
+	then
+		BRANCH=master
+	fi
+	git reset --hard origin/$BRANCH
+	git checkout -f $BRANCH
+	git checkout -- .
+	if [ name = unix ] ; then
+	  START=$(git rev-list --date-order --reverse --pretty=format:'%ci' HEAD |
+	  head -4 |
+	  tail -2 |
+	  awk '!/^commit/{print $1}')
+	else
+	  START=$(git rev-list --date-order --reverse --pretty=format:'%ci' HEAD |
+	  head -2 |
+	  awk '!/^commit/{print $1}')
+	fi
+	$HOME/src/cagr/tools/measure git $START 12 >$HOME/src/cagr/data/$COLLECTION/$name.csv
+done

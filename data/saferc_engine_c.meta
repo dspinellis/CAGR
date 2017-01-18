@@ -1,0 +1,132 @@
+%D Safer C
+%U -
+%V RCS
+
+Introduction
+============
+A small commercial system written in C for the Safety-critical industries 1999-2007.
+
+The growth is punctuated with only a small amount of activity in the last few years
+compared with the early part.  This should give an idea of a punctuated growth taken
+from a total of 27 updates over 8 years.
+
+Note that in contrast with the gundalf dataset, this is produced only for the actual
+releases rather than every change which took place.
+
+Means of production
+===================
+The data is mined from the RCS version of the source code using:-
+
+% make_saferc_engine_csv.sh | uniqueify.pl
+
+The first file is shown below.  (The second is shown in the gundalf_gui_tcltk.meta file).
+
+make_saferc_engine_csv.sh
++++++++++++++++++++++++
+#!/bin/sh
+#	Run on SaferC persistence data for each official release.
+#
+#    Revision: $Revision$
+#    Date:     $Date$
+#-------------------------------------------------
+if test $# -ne 0
+then
+     echo "Usage: $0"
+     exit
+fi
+#
+#    The -i turns off errors in make if something is missing.
+#    Note that I also have to get rid of the legacy KR_DECL/DEF_PROTO
+#    because it messes up my primitive parsing.
+#
+doit() {
+     (cd $MYC; make -s -i "SCTRL=$SCTRL" source &> /dev/null)
+     lines=`cat $MYC/DISTRIB/Safer_C/*.[ch] | wc -l`
+     yyyymmdd=`echo $SCTRL | awk '{print $1;}'`
+     echo "$yyyymmdd,$lines"
+}
+#
+#    egrep "#Release" makefile | sed 's/.*: //g' | sed 's/"[ \t].*/"/g'
+#    in $MYC produced this.
+#
+SCTRL="2007-04-17"
+REV=r27
+doit
+SCTRL="2005-02-07"
+REV=r26
+doit
+SCTRL="2004-02-18"
+REV=r25
+doit
+SCTRL="2002-10-15"
+REV=r24
+doit
+SCTRL="2002-05-07"
+REV=r23
+doit
+SCTRL="2002-03-31"
+REV=r22
+doit
+SCTRL="2002-01-29"
+REV=r21
+doit
+SCTRL="2001-12-21"
+REV=r20
+doit
+SCTRL="2001-10-31"
+REV=r19
+doit
+SCTRL="2001-09-10"
+REV=r18
+doit
+SCTRL="2001-08-02"
+REV=r17
+doit
+SCTRL="2001-07-15"
+REV=r16
+doit
+SCTRL="2001-04-06"
+REV=r15
+doit
+SCTRL="2001-04-04"
+REV=r14
+doit
+SCTRL="2001-02-22"
+REV=r13
+doit
+SCTRL="2001-02-12"
+REV=r12
+doit
+SCTRL="2000-12-30"
+REV=r11
+doit
+SCTRL="2000-12-12"
+REV=r10
+doit
+SCTRL="2000-12-03"
+REV=r9
+doit
+SCTRL="2000-09-08"
+REV=r8
+doit
+SCTRL="2000-08-05"
+REV=r7
+doit
+SCTRL="2000-07-27"
+REV=r6
+doit
+SCTRL="2000-02-03"
+REV=r5
+doit
+SCTRL="2000-01-26"
+REV=r4
+doit
+SCTRL="2000-01-12"
+REV=r3
+doit
+SCTRL="1999-10-27"
+REV=r2
+doit
+SCTRL="1999-07-31"
+REV=r1
+doit

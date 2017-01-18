@@ -1,0 +1,23 @@
+%D C Python
+%U http://hg.python.org/cpython
+%V hg
+
+hg clone http://hg.python.org/cpython
+
+Establish first date through
+hg log | grep date: | tail
+
+Measure by running
+~/src/cagr/tools/measure hg 19900809 12 >~/src/cagr/data/cpython.csv &
+
+Remove 7 lines, which represent time where negligible source code was
+committed.
+
+1990-08-09,56
+1990-09-08,57
+1990-10-08,58
+1990-11-08,59
+1990-12-08,60
+1991-01-08,61
+1991-02-07,62
+1991-03-10,63

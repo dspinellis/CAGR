@@ -1,0 +1,23 @@
+#!/bin/sh -x
+# Pull new additions from all Git repositories
+#
+
+cd $HOME/data
+
+find . -type d -name .git |
+while read d ; do
+  echo $d
+  (
+    cd $(dirname $d)
+    BRANCH=`git config --get-regexp branch.*remote | sed -n 's/^branch.//;s/\.remote origin//p'`
+    if [ "$BRANCH" = '' ]
+    then
+	    BRANCH=master
+    fi
+    rm -rf *
+    git reset --hard
+    git checkout $BRANCH
+    git pull origin $BRANCH
+    rm -rf *
+  )
+done
