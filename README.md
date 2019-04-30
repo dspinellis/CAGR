@@ -6,8 +6,8 @@ for the following paper.
 Les Hatton, Diomidis Spinellis, and Michiel van Genuchten.
 The long-term growth rate of evolving software:
 Empirical results and implications.
-*Journal of Software: Evolution and Process*, 2017.
-To appear. [doi:10.1002/smr.1847](http://dx.doi.org/10.1002/smr.1847)
+*Journal of Software: Evolution and Process*, February 2017.
+[doi:10.1002/smr.1847](http://dx.doi.org/10.1002/smr.1847)
 
 ## Data Collection
 
