@@ -1,5 +1,7 @@
 # Compound Annual Growth Rate for Software
 
+[![DOI](https://zenodo.org/badge/2655008.svg)](https://zenodo.org/badge/latestdoi/2655008)
+
 This repository contains the reproducibility package (software and data)
 for the following paper.
 
